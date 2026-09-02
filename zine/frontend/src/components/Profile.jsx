@@ -7,6 +7,7 @@ export function Profile(){
     const [profile, setProfile] = useState([]);
      const {id} = useParams()
 
+     
     return(
         <div>
             <p>{profile.name}</p>
