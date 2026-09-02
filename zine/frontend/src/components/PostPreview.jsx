@@ -1,6 +1,6 @@
 
 
-function PostPreview({post}){
+export function PostPreview({post}){
     return(
         <div>
             <img src={post.img} />

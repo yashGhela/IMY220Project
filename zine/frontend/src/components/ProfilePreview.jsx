@@ -1,6 +1,6 @@
 
 
-function ProfilePreview({username, pfplink}){
+export function ProfilePreview({username, pfplink}){
 
     return(
         <div>

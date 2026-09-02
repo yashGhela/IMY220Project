@@ -1,7 +1,7 @@
 import {Link} from "react-router"
 
 
-function Navigation({currPage, authed}){
+export function Navigation({currPage, authed}){
 
     return(
         <nav>

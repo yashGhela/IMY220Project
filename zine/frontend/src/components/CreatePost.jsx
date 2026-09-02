@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-function createPost(){
+export function createPost(){
 
     const [imgfile, setImgFile]=useState(null);
     const [caption, setCaption]= useState('');
