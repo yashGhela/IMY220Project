@@ -1,6 +1,6 @@
 import {Navigation} from "../components/Navigation"
 
-export function Profile(){
+export function Album(){
 
     return(
 

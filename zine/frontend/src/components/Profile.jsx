@@ -1,7 +1,11 @@
+import { useState } from "react"
 import {UserPosts} from "../components/UserPosts"
 
-export function Profile({profile}){
+export function Profile(){
 
+
+    const [profile, setProfile] = useState([]);
+     const {id} = useParams()
 
     return(
         <div>

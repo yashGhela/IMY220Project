@@ -1,10 +1,11 @@
+
 import {Navigation} from "../components/Navigation"
 
-export function Profile(){
+export function Auth(){
 
     return(
 
-        <Navigation authed={true}/>
+        <Navigation authed={false}/>
         
     )
 }

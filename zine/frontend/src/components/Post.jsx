@@ -1,9 +1,14 @@
 import {PostImage} from "../components/PostImage"
 
 import {PostComments} from "../components/PostComments"
+import { useParams } from "react-router-dom"
+import { useState } from "react"
 
 
-export function Post({post}){
+export function Post(){
+
+    const [post, setPost]= useState([])
+    const {id} = useParams()
 
     return(
 
