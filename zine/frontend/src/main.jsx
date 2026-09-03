@@ -4,8 +4,8 @@ import './index.css'
 import App from './App.jsx'
 import { Splash } from './pages/Splash.jsx'
 import { Home } from './pages/Home.jsx'
-import { Post } from './components/Post.jsx'
-import { Profile } from './components/Profile.jsx'
+import { PostPage } from './components/Post.jsx'
+import { ProfilePage } from './components/Profile.jsx'
 import { Auth } from './pages/Auth.jsx'
 import { Album } from './pages/Album.jsx'
 
@@ -15,6 +15,11 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <Routes>
     <Route path="/" element={<Splash/>}/>
+    <Route path='/home' element={<Home/>}/>
+    <Route path='/profile' element={<ProfilePage/>}/>
+    <Route path="/post"  element={<PostPage/>}/>
+    <Route path='/auth' element={<Auth/>}/>
+    <Route path='/album' element={<Album/>}/>
   </Routes>
   </BrowserRouter>
 )

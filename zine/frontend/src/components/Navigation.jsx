@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 export function Navigation({currPage, authed}){
 
     return(
-        <nav>
+        <nav className=" flex">
             <h1>ZINE</h1>
             <ul>
 

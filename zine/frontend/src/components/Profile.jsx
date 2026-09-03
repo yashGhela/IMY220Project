@@ -10,12 +10,12 @@ export function Profile(){
      
     return(
         <div>
-            <p>{profile.name}</p>
-            <p>{profile.username}</p>
-            <p>{profile.pronouns}</p>
-            <p>{profile.follower_count}</p>
+            <p>Yash Ghela</p>
+            <p>@yashg</p>
+            <p>He/Him</p>
+            <p>1500 followers</p>
 
-            <p>{profile.bio}</p>
+            <p>Photographer from SA</p>
 
             
 
