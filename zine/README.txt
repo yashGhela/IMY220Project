@@ -1,7 +1,7 @@
 Zine Docker instructions
 
 GitHub repository:
-Add your GitHub repository link here.
+https://github.com/yashGhela/IMY220Project.git
 
 Open Docker Desktop first.
 
@@ -9,10 +9,10 @@ Build backend, from the zine project root:
 docker build -f backend/Dockerfile -t zine-backend .
 
 Run backend:
-docker run --name zine-backend-container -p 3001:3001 zine-backend
+docker run --name zine-backend-container  -p 3001:3001 zine-backend
 
 Build frontend, from the zine project root:
-docker build -f frontend/Dockerfile -t zine-frontend .
+docker build -f frontend/src/Dockerfile -t zine-frontend .
 
 Run frontend:
 docker run --name zine-frontend-container -p 5173:5173 zine-frontend
