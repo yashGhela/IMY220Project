@@ -16,8 +16,8 @@ createRoot(document.getElementById('root')).render(
   <Routes>
     <Route path="/" element={<Splash/>}/>
     <Route path='/home' element={<Home/>}/>
-    <Route path='/profile' element={<ProfilePage/>}/>
-    <Route path="/post"  element={<PostPage/>}/>
+    <Route path='/profile/:id' element={<ProfilePage/>}/>
+    <Route path="/post/:id"  element={<PostPage/>}/>
     <Route path='/auth' element={<Auth/>}/>
     <Route path='/album' element={<Album/>}/>
   </Routes>

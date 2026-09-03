@@ -16,7 +16,7 @@ export function Auth(){
 
             <Navigation authed={false}/>
 
-            <button onClick={(e)=>{if(login){setLogin(false)}else{setLogin(true)}}}>Change to {login?"Login":"Sign Up"}</button>
+            <button onClick={(e)=>{if(login){setLogin(false)}else{setLogin(true)}}}>Change to {login?"Sign Up":"Login"}</button>
 
             {login?
             <Login/>

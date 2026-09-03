@@ -1,26 +1,32 @@
-
-import express, { json } from "express";
+import express from "express";
 import cors from "cors";
 
-const app = express()
-
+const app = express();
 const PORT = 3001;
 
-app.use(cors)
-app.use(json());
+app.use(cors());
+app.use(express.json());
 
-app.post("/api/auth/signup", (res,req)=>{
-  console.log("Signing up")
-    const {username, password} = req.body;
+app.get("/api/get", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is working",
+  });
+});
 
-    if(!username || !password){
-        return res.status(400).json({
-        success: false,
-        message: "Username and password are required",
-        });
-    }
+app.post("/api/auth/signup", (req, res) => {
+  console.log("Signing up");
 
-    res.status(201).json({
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({
+      success: false,
+      message: "Username and password are required",
+    });
+  }
+
+  res.status(201).json({
     success: true,
     message: "Account created successfully",
     user: {
@@ -28,8 +34,7 @@ app.post("/api/auth/signup", (res,req)=>{
       username,
     },
   });
-})
-
+});
 
 app.post("/api/auth/signin", (req, res) => {
   const { username, password } = req.body;

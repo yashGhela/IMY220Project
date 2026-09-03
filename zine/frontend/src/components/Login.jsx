@@ -5,6 +5,7 @@ export function Login(){
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [errors, setErrors] = useState({});
 
     
     function validateUsername(value) {
@@ -61,9 +62,15 @@ export function Login(){
         <form onSubmit={handleSubmit}>
             <p>username</p>
             <input value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" />
+            {errors.username && <p>{errors.username}</p>}
+
             <p>password</p>
             <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" />
 
+            {errors.password && <p>{errors.password}</p>}
+
+
+            {errors.form && <p>{errors.form}</p>}
 
             <button type="submit">Log in</button>
         </form>
