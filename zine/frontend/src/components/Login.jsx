@@ -19,7 +19,7 @@ export function Login(){
     return "";
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const usernameError = validateUsername(username);
@@ -33,7 +33,30 @@ export function Login(){
     if (!usernameError && !passwordError) {
       console.log("Form is valid");
     }
+
+    const response = await fetch("http://localhost:3001/api/auth/signin", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  });
+
+    const data = await response.json();
+
+    if (data.success) {
+        console.log(data.message);
+        console.log(data.user);
+        // navigate("/album"); // optional: redirect after sign-in
+    } else {
+        setErrors({ form: data.message });
+    }
   }
+
+
     return(
         <form onSubmit={handleSubmit}>
             <p>username</p>
