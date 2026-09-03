@@ -1,5 +1,6 @@
 import { useState } from "react"
 import {UserPosts} from "../components/UserPosts"
+import { useParams } from "react-router-dom";
 
 export function Profile(){
 
@@ -21,7 +22,7 @@ export function Profile(){
 
             <hr />
 
-           <UserPosts posts={profile.posts}/>
+           {/* <UserPosts posts={profile.posts}/> */}
         </div>
     )
 

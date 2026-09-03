@@ -1,15 +1,16 @@
 
-const express = require("express")
-const cors = require("cors")
+import express, { json } from "express";
+import cors from "cors";
 
 const app = express()
 
 const PORT = 3001;
 
 app.use(cors)
-app.use(express.json());
+app.use(json());
 
 app.post("/api/auth/signup", (res,req)=>{
+  console.log("Signing up")
     const {username, password} = req.body;
 
     if(!username || !password){

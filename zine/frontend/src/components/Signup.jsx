@@ -78,7 +78,7 @@ export function SignUp() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form class="flex flex-col" onSubmit={handleSubmit}>
       <input
         type="file"
         accept="image/*"
