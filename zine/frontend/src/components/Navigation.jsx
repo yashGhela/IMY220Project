@@ -3,18 +3,18 @@ import {Link} from "react-router-dom"
 export function Navigation({currPage, authed}){
 
     return(
-        <nav className=" flex">
-            <h1>ZINE</h1>
+        <nav className=" flex mx-5">
+            <Link to='/' class="font-black">ZINE</Link>
             <ul>
 
                {authed?
                <div>
-                 <Link to="/">Home</Link>
-                <Link to='/profile'>Profile</Link>
+                 <Link class="mx-10" to="/home">Home</Link>
+                <Link class="mx-10" to='/profile'>Profile</Link>
                </div>:
                <div>
-                <Link to="/auth">Join</Link>
-                <Link to='/auth'>Login</Link>
+                <Link class="mx-10" to="/auth">Join</Link>
+                <Link class="mx-10" to='/auth'>Login</Link>
                </div>
                 
                 }

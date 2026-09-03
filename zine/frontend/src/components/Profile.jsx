@@ -10,7 +10,7 @@ export function Profile(){
 
      
     return(
-        <div>
+        <div class="m-20">
             <p>Yash Ghela</p>
             <p>@yashg</p>
             <p>He/Him</p>

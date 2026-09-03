@@ -59,20 +59,20 @@ export function Login(){
 
 
     return(
-        <form onSubmit={handleSubmit}>
+        <form class="m-40" onSubmit={handleSubmit}>
             <p>username</p>
-            <input value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" />
+            <input placeholder="username" value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" />
             {errors.username && <p>{errors.username}</p>}
 
             <p>password</p>
-            <input value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" />
+            <input placeholder="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" />
 
             {errors.password && <p>{errors.password}</p>}
 
 
-            {errors.form && <p>{errors.form}</p>}
+            {errors.form && <p>{errors.form}</p>} <br/>
 
-            <button type="submit">Log in</button>
+            <button class=" bg-olive-300 text-white my-10 w-100"  type="submit">Log in</button>
         </form>
     )
 }

@@ -78,7 +78,7 @@ export function SignUp() {
   }
 
   return (
-    <form class="flex flex-col" onSubmit={handleSubmit}>
+    <form class="flex flex-col m-40" onSubmit={handleSubmit}>
       <input
         type="file"
         accept="image/*"
@@ -119,7 +119,7 @@ export function SignUp() {
 
       {errors.form && <p>{errors.form}</p>}
 
-      <button type="submit">Complete</button>
+      <button class=" bg-olive-300 text-white my-10" type="submit">Complete</button>
     </form>
   );
 }
