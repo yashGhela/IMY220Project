@@ -16,7 +16,7 @@ export function Feed(){
     const loadPosts = async()=>{
         try{
             setLoading(true)
-            const response = await fetch(`${API}/posts`,{
+            const response = await fetch(`${API}/api/posts`,{
                 method:"GET",
                 headers: {
                     "Content-Type": "application/json",

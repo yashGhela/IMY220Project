@@ -6,5 +6,6 @@ export function PostPage(){
 
         <Navigation/>
         
+        
     )
 }
