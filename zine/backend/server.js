@@ -105,7 +105,7 @@ app.post("api/users", async(req,res)=>{
       username: newPost.username,
     })
   }catch(error){
-    console.error("Error adding post:", error);
+    console.error("Error adding user:", error);
     res.status(500).json({ error: "Failed to add user." });
   }
 })
@@ -118,7 +118,7 @@ app.get("api/users", async(req,res)=>{
 
     res.status(201).json(users)
   }catch(error){
-    console.error("Error adding post:", error);
+    console.error("Error getting users:", error);
     res.status(500).json({ error: "Failed to get users." });
   }
 })
@@ -126,13 +126,13 @@ app.get("api/users", async(req,res)=>{
 
 app.get("api/users/:id", async(req,res)=>{
   try{
-    const {id} = req.body
+    const {id} = req.params
     const user = await usercol.findOne(id);
     
 
     res.status(201).json(user)
   }catch(error){
-    console.error("Error adding post:", error);
+    console.error("Error getting user:", error);
     res.status(500).json({ error: "Failed to get user." });
   }
 })
@@ -145,8 +145,8 @@ app.delete("api/users/:id", async(req,res)=>{
 
     res.status(result.acknowledged)
   }catch(error){
-    console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to get user." });
+    console.error("Error deleting user:", error);
+    res.status(500).json({ error: "Failed to delete user." });
   }
 })
 
@@ -176,10 +176,136 @@ app.patch("api/users/:id", async(req,res)=>{
 
     res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
   }catch(error){
-    console.error("Error adding post:", error);
+    console.error("Error updating user:", error);
     res.status(500).json({ error: "Failed to update User." });
   }
 })
+
+
+//Posts
+
+
+
+app.post("api/posts", async(req,res)=>{
+  try{
+    const{user_id, caption, img_link, album_id} = req.body
+
+    if (!caption || !caption.trim() || !img_link || !img_link.trim() || !user_id || !user_id.trim()) {
+            return res
+                .status(400)
+                .json({ error: "Missing fields." });
+        }
+    
+    const newPost = {
+      user_id:user_id, 
+      caption:caption,
+      img_link:img_link,
+      album_id:album_id
+    }
+
+    const result = await postscol.insertOne(newPost)
+
+    res.status(201).json({
+      _id: result.insertedId,
+      
+    })
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to add post." });
+  }
+})
+
+
+app.get("api/posts", async(req,res)=>{
+  try{
+    const posts = await postscol.find().toArray()
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to get posts." });
+  }
+})
+
+
+app.get("api/posts/:user_id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const posts = await postscol.findMany(id);
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error getting user posts:", error);
+    res.status(500).json({ error: "Failed to get user posts." });
+  }
+})
+
+app.get("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const post = await postscol.findOne(id);
+    
+
+    res.status(201).json(post)
+  }catch(error){
+    console.error("Error getting post:", error);
+    res.status(500).json({ error: "Failed to get post." });
+  }
+})
+
+app.delete("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const result = await postscol.deleteOne(id);
+    
+
+    res.status(result.acknowledged)
+  }catch(error){
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Failed to delete post." });
+  }
+})
+
+
+app.patch("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const updates = req.body
+
+    delete updates._id
+    delete updates.createdAt;
+
+    
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No update fields provided" });
+    }
+
+   
+    const result = await userscol.updateOne(
+      {"_id": new ObjectId(id) },
+      { "$set": updates } 
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
+  }catch(error){
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Failed to update Post." });
+  }
+})
+
+
+//Comments
+
+
+
+
+
 
 
 
