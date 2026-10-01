@@ -5,7 +5,7 @@ export function Splash(){
     return(
 
         <div>
-            <Navigation authed={false}/>
+            <Navigation/>
         <p>Splash</p>
         </div>
     )

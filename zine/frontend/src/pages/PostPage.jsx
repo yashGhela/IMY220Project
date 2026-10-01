@@ -4,7 +4,7 @@ export function PostPage(){
 
     return(
 
-        <Navigation authed={true}/>
+        <Navigation/>
         
     )
 }

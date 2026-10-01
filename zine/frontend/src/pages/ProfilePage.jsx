@@ -6,7 +6,7 @@ export function ProfilePage(){
     return(
 
        <div>
-         <Navigation authed={true}/>
+         <Navigation />
 
         <Profile />
        </div>

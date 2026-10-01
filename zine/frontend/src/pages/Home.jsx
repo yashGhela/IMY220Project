@@ -4,7 +4,7 @@ export function Home(){
 
     return(
 
-        <Navigation authed={true}/>
+        <Navigation />
         
     )
 }

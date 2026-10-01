@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setCookie } from "../utils/cookies";
 
 export function SignUp() {
   const [username, setUsername] = useState("");
@@ -70,6 +71,7 @@ export function SignUp() {
       if (data.success) {
         console.log(data.message);
         console.log(data.user);
+        setCookie("userId", data.user._id);
         navigate('/home')
       } else {
         setErrors({ form: data.message });

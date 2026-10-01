@@ -4,7 +4,7 @@ export function Album(){
 
     return(
 
-        <Navigation authed={true}/>
+        <Navigation/>
         
     )
 }

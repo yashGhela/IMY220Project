@@ -1,6 +1,18 @@
 import {Link} from "react-router-dom"
+import { getCookie } from "../utils/cookies"
 
-export function Navigation({currPage, authed}){
+export function Navigation(){
+
+    let authed= false
+    const isAuthed = ()=>{
+        const id= getCookie("userId")
+
+        if (!id){
+            authed=false
+        }else{
+            authed=true
+        }
+    }
 
     return(
         <nav className=" flex mx-5">

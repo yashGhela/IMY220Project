@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 
+import { setCookie } from "../utils/cookies";
+
 
 export function Login(){
 
@@ -55,6 +57,7 @@ export function Login(){
     if (data.success) {
         console.log(data.message);
         console.log(data.user);
+        setCookie("userId", data.user._id);
          navigate('/home')
         
         // navigate("/album"); // optional: redirect after sign-in
