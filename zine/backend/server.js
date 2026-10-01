@@ -83,9 +83,9 @@ const friendscol = db.collection("Friends")
 
 app.post("api/users", async(req,res)=>{
   try{
-    const{username, name, email, password} = req.body
+    const{username, name, email, password, friends, bio} = req.body
 
-    if (!username || !username.trim() || !name || !name.trim() || !email || !email.trim() || !password || !password.trim()) {
+    if (!username || !username.trim() || bio || !bio.trim() ||  !name || !name.trim() || !email || !email.trim() || !password || !password.trim()) {
             return res
                 .status(400)
                 .json({ error: "Missing fields." });
@@ -95,7 +95,9 @@ app.post("api/users", async(req,res)=>{
       username:username, 
       name:name,
       email:email,
-      password:passwordd
+      password:password,
+      bio:bio,
+      friends:0
     }
 
     const result = await usercol.insertOne(newUser)
