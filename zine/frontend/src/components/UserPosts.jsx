@@ -1,13 +1,16 @@
-import {PostPreview} from "../components/PostPreview"
+import { Link } from "react-router-dom";
+import { API } from "../config";
 
+export function UserPosts({ posts }) {
+  if (posts.length === 0) return <p>No posts yet</p>;
 
-export function UserPosts({posts}){
-
-    return (
-        <div>
-        {posts.map((post)=>{
-            <PostPreview post={post} />
-        })}
-        </div>
-    )
+  return (
+    <div className="grid grid-cols-3 gap-2">
+      {posts.map((post) => (
+        <Link key={post._id} to={`/post/${post._id}`}>
+          <img src={API + post.img_link} alt={post.caption} />
+        </Link>
+      ))}
+    </div>
+  );
 }

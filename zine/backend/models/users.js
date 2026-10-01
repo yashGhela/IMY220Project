@@ -27,3 +27,14 @@ export const deleteUser = (id) =>
 
 export const updateUser = (id, updates) =>
   collections.users.updateOne({ _id: new ObjectId(id) }, { $set: updates });
+
+// escapes regex characters so "a.b" or "(" in the search can't break the query
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+export const searchUsers = (term) => {
+  const regex = new RegExp(escapeRegex(term), "i"); // case-insensitive, matches anywhere
+  return collections.users
+    .find({ $or: [{ username: regex }, { name: regex }] }, safe)
+    .limit(20)
+    .toArray();
+};

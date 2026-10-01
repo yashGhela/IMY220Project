@@ -111,12 +111,25 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.patch("/:id", async (req, res) => {
+
+router.patch("/:id", upload.single("image"), async (req, res) => {
+  const cleanup = () => {
+    if (req.file) fs.unlink(req.file.path, () => {});
+  };
+
   try {
     const { id } = req.params;
 
     if (!isValidId(id)) {
+      cleanup();
       return res.status(400).json({ error: "Invalid post id." });
+    }
+
+    const post = await Posts.getPostById(id);
+
+    if (!post) {
+      cleanup();
+      return res.status(404).json({ error: "Post not found." });
     }
 
     // only these fields can be changed
@@ -127,19 +140,28 @@ router.patch("/:id", async (req, res) => {
     if (req.body.album_id !== undefined) {
       updates.album_id = req.body.album_id || null;
     }
+    if (req.file) {
+      updates.img_link = `/uploads/${req.file.filename}`;
+    }
 
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({ error: "No update fields provided" });
     }
 
-    const result = await Posts.updatePost(id, updates);
+    await Posts.updatePost(id, updates);
 
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ error: "Post not found" });
+    
+    if (req.file) {
+      fs.unlink(path.join("uploads", path.basename(post.img_link)), () => {});
     }
 
-    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
+    res.status(200).json({
+      message: "Update successful",
+      caption: updates.caption ?? post.caption,
+      img_link: updates.img_link ?? post.img_link,
+    });
   } catch (error) {
+    cleanup();
     console.error("Error updating post:", error);
     res.status(500).json({ error: "Failed to update Post." });
   }

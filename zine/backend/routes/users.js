@@ -97,4 +97,24 @@ router.patch("/:id/profile-pic", upload.single("profile_pic"), async (req, res) 
     res.status(500).json({ error: "Failed to update profile picture." });
   }
 });
+
+
+router.get("/search", async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    if (!isStr(q)) {
+      return res.status(400).json({ error: "Search term is required." });
+    }
+
+    const users = await Users.searchUsers(q.trim());
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error searching users:", error);
+    res.status(500).json({ error: "Failed to search users." });
+  }
+});
+
+
 export default router;
