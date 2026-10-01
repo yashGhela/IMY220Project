@@ -7,6 +7,8 @@ RUN npm ci --omit=dev
 
 COPY backend ./backend
 
+VOLUME /app/backend/uploads
+
 EXPOSE 3001
 
 CMD ["npm", "run", "start"]
