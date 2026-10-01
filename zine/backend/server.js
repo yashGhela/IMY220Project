@@ -518,90 +518,79 @@ app.patch("api/friends/:id", async(req,res)=>{
 
 
 
-app.post("api/posts", async(req,res)=>{
+app.post("api/albums", async(req,res)=>{
   try{
-    const{user_id, caption, img_link, album_id} = req.body
+    const{user_id, album_name, description} = req.body
 
-    if (!caption || !caption.trim() || !img_link || !img_link.trim() || !user_id || !user_id.trim()) {
+    if (!album_name || !album_name.trim() || !description || !description.trim() || !user_id || !user_id.trim()) {
             return res
                 .status(400)
                 .json({ error: "Missing fields." });
         }
     
-    const newPost = {
+    const newAlbum = {
       user_id:user_id, 
-      caption:caption,
-      img_link:img_link,
-      album_id:album_id
+      album_name:album_name,
+      description:description,
+    
     }
 
-    const result = await postscol.insertOne(newPost)
+    const result = await albumscol.insertOne(newAlbum)
 
     res.status(201).json({
       _id: result.insertedId,
       
     })
   }catch(error){
-    console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to add post." });
+    console.error("Error adding album:", error);
+    res.status(500).json({ error: "Failed to add album." });
   }
 })
 
 
-app.get("api/posts", async(req,res)=>{
+app.get("api/albums", async(req,res)=>{
   try{
-    const posts = await postscol.find().toArray()
+    const albums = await albumscol.find().toArray()
     
 
-    res.status(201).json(posts)
+    res.status(201).json(albums)
   }catch(error){
-    console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to get posts." });
+    console.error("Error adding albums:", error);
+    res.status(500).json({ error: "Failed to get albums." });
   }
 })
 
 
-app.get("api/posts/:user_id", async(req,res)=>{
+
+
+app.get("api/albums/:id", async(req,res)=>{
   try{
     const {id} = req.params
-    const posts = await postscol.findMany(id);
+    const album = await albumscol.findOne(id);
     
 
-    res.status(201).json(posts)
+    res.status(201).json(album)
   }catch(error){
-    console.error("Error getting user posts:", error);
-    res.status(500).json({ error: "Failed to get user posts." });
+    console.error("Error getting album:", error);
+    res.status(500).json({ error: "Failed to get album." });
   }
 })
 
-app.get("api/posts/:id", async(req,res)=>{
+app.delete("api/albums/:id", async(req,res)=>{
   try{
     const {id} = req.params
-    const post = await postscol.findOne(id);
-    
-
-    res.status(201).json(post)
-  }catch(error){
-    console.error("Error getting post:", error);
-    res.status(500).json({ error: "Failed to get post." });
-  }
-})
-
-app.delete("api/posts/:id", async(req,res)=>{
-  try{
-    const {id} = req.params
-    const result = await postscol.deleteOne(id);
+    const result = await albumscol.deleteOne(id);
     
 
     res.status(result.acknowledged)
   }catch(error){
-    console.error("Error deleting post:", error);
-    res.status(500).json({ error: "Failed to delete post." });
+    console.error("Error deleting album:", error);
+    res.status(500).json({ error: "Failed to delete album." });
   }
 })
 
 
-app.patch("api/posts/:id", async(req,res)=>{
+app.patch("api/albums/:id", async(req,res)=>{
   try{
     const {id} = req.params
     const updates = req.body
@@ -615,19 +604,19 @@ app.patch("api/posts/:id", async(req,res)=>{
     }
 
    
-    const result = await userscol.updateOne(
+    const result = await albumscol.updateOne(
       {"_id": new ObjectId(id) },
       { "$set": updates } 
     );
 
     if (result.matchedCount === 0) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "Album not found" });
     }
 
     res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
   }catch(error){
-    console.error("Error updating post:", error);
-    res.status(500).json({ error: "Failed to update Post." });
+    console.error("Error updating Album:", error);
+    res.status(500).json({ error: "Failed to update Album." });
   }
 })
 
