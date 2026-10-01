@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom"
 import { getCookie } from "../utils/cookies"
+import { useEffect } from "react"
 
 export function Navigation(){
 
@@ -13,6 +14,11 @@ export function Navigation(){
             authed=true
         }
     }
+
+    useEffect(()=>{
+
+        isAuthed()
+    },[])
 
     return(
         <nav className=" flex mx-5">

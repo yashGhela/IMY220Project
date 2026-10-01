@@ -4,6 +4,7 @@ import { useState } from "react"
 export function EditProfile({profile}){
 
     const[newName, setName] = useState("");
+    const [newBio, setBio]= useState("");
 
 
     return(
