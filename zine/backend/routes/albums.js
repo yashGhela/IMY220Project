@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as Albums from "../models/albums.js";
 import { isStr, isValidId, pick } from "../utils/validate.js";
+import * as Posts from "../models/posts.js";
 
 const router = Router();
 
@@ -88,6 +89,9 @@ router.delete("/:id", async (req, res) => {
     if (result.deletedCount === 0) {
       return res.status(404).json({ error: "Album not found." });
     }
+
+    // the posts stay, they just no longer belong to an album
+    await Posts.removeAlbumFromPosts(id);
 
     res.status(200).json({ message: "Album deleted" });
   } catch (error) {

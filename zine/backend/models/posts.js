@@ -16,3 +16,6 @@ export const deletePost = (id) =>
 
 export const updatePost = (id, updates) =>
   collections.posts.updateOne({ _id: new ObjectId(id) }, { $set: updates });
+
+export const removeAlbumFromPosts = (album_id) =>
+  collections.posts.updateMany({ album_id }, { $set: { album_id: null } });

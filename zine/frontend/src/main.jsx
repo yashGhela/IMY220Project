@@ -10,6 +10,8 @@ import { Auth } from './pages/Auth.jsx'
 import { Album } from './pages/Album.jsx'
 
 import {BrowserRouter, Routes, Route} from "react-router-dom"
+import { CreatePostPage } from './pages/CreatePostPage.jsx'
+import { CreateAlbumPage } from './pages/CreateAlbumPage.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -21,6 +23,8 @@ createRoot(document.getElementById('root')).render(
     <Route path="/post/:id"  element={<PostPage/>}/>
     <Route path='/auth' element={<Auth/>}/>
     <Route path='/album' element={<Album/>}/>
+    <Route path='/createpost' element={<CreatePostPage/>}/>
+    <Route path='/createalbum' element={<CreateAlbumPage/>}/>
   </Routes>
   </BrowserRouter>
 )
