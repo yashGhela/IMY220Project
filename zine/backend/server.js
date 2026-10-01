@@ -139,7 +139,7 @@ app.get("api/users/:id", async(req,res)=>{
 
 app.delete("api/users/:id", async(req,res)=>{
   try{
-    const {id} = req.body
+    const {id} = req.params
     const result = await usercol.deleteOne(id);
     
 
@@ -153,14 +153,31 @@ app.delete("api/users/:id", async(req,res)=>{
 
 app.patch("api/users/:id", async(req,res)=>{
   try{
-    const {id} = req.body
-    const result = await usercol.deleteOne(id);
-    
+    const {id} = req.params
+    const updates = req.body
 
-    res.status(result.acknowledged)
+    delete updates._id
+    delete updates.createdAt;
+
+    
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No update fields provided" });
+    }
+
+   
+    const result = await userscol.updateOne(
+      {"_id": new ObjectId(id) },
+      { "$set": updates } 
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
   }catch(error){
     console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to get user." });
+    res.status(500).json({ error: "Failed to update User." });
   }
 })
 
