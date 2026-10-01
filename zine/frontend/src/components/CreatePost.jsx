@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { getCookie } from "../utils/cookies";
+import { useNavigate } from "react-router-dom";
 
 export function CreatePost() {
   const [imgfile, setImgFile] = useState(null);
   const [caption, setCaption] = useState("");
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate()
 
   function validateImage(file) {
     if (!file) return "Please choose an image";
@@ -67,6 +70,8 @@ export function CreatePost() {
         setImgFile(null);
         setCaption("");
         setErrors({ form: "Post created!" });
+        navigate('/home')
+
         event.target.reset(); // clears the file input
       } else {
         setErrors({ form: data.error });
