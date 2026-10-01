@@ -9,7 +9,6 @@ Build backend, from the zine project root:
 docker build -f backend/Dockerfile -t zine-backend .
 
 Run backend:
-docker run --name zine-backend-container  -p 3001:3001 zine-backend
 docker run -d --name backend -p 3001:3001 --env-file .env zine-backend
 
 Build frontend, from the zine project root:
