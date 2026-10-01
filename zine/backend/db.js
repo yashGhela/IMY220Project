@@ -1,5 +1,5 @@
+import "dotenv/config";
 import { MongoClient } from "mongodb";
-
 // Student Number: u25161360
 
 let client;
