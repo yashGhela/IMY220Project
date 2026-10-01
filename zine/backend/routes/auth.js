@@ -2,15 +2,26 @@ import { Router } from "express";
 import * as Users from "../models/users.js";
 import { hashPassword, verifyPassword } from "../utils/password.js";
 import { isStr } from "../utils/validate.js";
+import fs from "fs";
+import { upload } from "../middleware/upload.js";
 
 const router = Router();
 
+
+
 //SIGN UP
-router.post("/signup", async (req, res) => {
+// removes the uploaded file if signup fails, so no orphaned images pile up
+const cleanup = (file) => {
+  if (file) fs.unlink(file.path, () => {});
+};
+
+//SIGN UP
+router.post("/signup", upload.single("profile_pic"), async (req, res) => {
   try {
     const { username, name, email, password, bio } = req.body;
 
     if (![username, name, email, password].every(isStr)) {
+      cleanup(req.file);
       return res.status(400).json({
         success: false,
         message: "Username, name, email and password are required",
@@ -18,6 +29,7 @@ router.post("/signup", async (req, res) => {
     }
 
     if (password.length < 8) {
+      cleanup(req.file);
       return res.status(400).json({
         success: false,
         message: "Password must be at least 8 characters",
@@ -29,6 +41,7 @@ router.post("/signup", async (req, res) => {
       email.trim().toLowerCase()
     );
     if (existing) {
+      cleanup(req.file);
       return res.status(409).json({
         success: false,
         message: "Username or email already in use",
@@ -41,6 +54,7 @@ router.post("/signup", async (req, res) => {
       email: email.trim().toLowerCase(),
       password: await hashPassword(password),
       bio: isStr(bio) ? bio.trim() : "",
+      profile_pic: req.file ? `/uploads/${req.file.filename}` : null,
       createdAt: new Date(),
     };
 
@@ -55,14 +69,15 @@ router.post("/signup", async (req, res) => {
         name: newUser.name,
         email: newUser.email,
         bio: newUser.bio,
+        profile_pic: newUser.profile_pic,
       },
     });
   } catch (error) {
+    cleanup(req.file);
     console.error("Signup error:", error);
     res.status(500).json({ success: false, message: "Failed to create account" });
   }
 });
-
 //SIGN IN
 router.post("/signin", async (req, res) => {
   try {

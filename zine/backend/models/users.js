@@ -1,8 +1,12 @@
 import { ObjectId } from "mongodb";
 import { collections } from "../db.js";
 
+
+
 // never send the password hash back by default
 const safe = { projection: { password: 0 } };
+
+
 
 export const createUser = (user) => collections.users.insertOne(user);
 
