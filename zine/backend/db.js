@@ -17,6 +17,15 @@ async function connectDB() {
     console.log("Connected to MongoDB");
 }
 
+
+export const collections = {
+  get users()    { return getDB().collection("Users"); },
+  get posts()    { return getDB().collection("Posts"); },
+  get comments() { return getDB().collection("Comments"); },
+  get albums()   { return getDB().collection("Albums"); },
+  get friends()  { return getDB().collection("Friends"); },
+};
+
 function getDB() {
     return db;
 }
