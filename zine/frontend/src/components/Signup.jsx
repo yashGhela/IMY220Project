@@ -18,7 +18,7 @@ export function SignUp() {
 
   function validatePassword(value) {
     if (!value) return "Password is required";
-    if (value.length < 6) return "Password must be at least 6 characters";
+    if (value.length < 8) return "Password must be at least 6 characters";
     return "";
   }
 
@@ -50,18 +50,16 @@ export function SignUp() {
     if (hasErrors) return;
 
     try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("username", username);
+      formData.append("password", password);
+      if (pfpFile) formData.append("profile_pic", pfpFile); 
+
       const response = await fetch("http://localhost:3001/api/auth/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          username,
-          password,
-          profilePictureName: pfpFile ? pfpFile.name : null,
-        }),
+        body: formData, 
       });
 
       const data = await response.json();
