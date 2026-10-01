@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const [username, setUsername] = useState("");
@@ -7,6 +8,8 @@ export function SignUp() {
   const [pfpFile, setPfpFile] = useState(null);
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
 
   function validateUsername(value) {
     if (!value.trim()) return "Username is required";
@@ -67,6 +70,7 @@ export function SignUp() {
       if (data.success) {
         console.log(data.message);
         console.log(data.user);
+        navigate('/home')
       } else {
         setErrors({ form: data.message });
       }

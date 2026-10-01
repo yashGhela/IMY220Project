@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 
 export function Login(){
@@ -6,6 +7,9 @@ export function Login(){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
+
 
     
     function validateUsername(value) {
@@ -51,6 +55,8 @@ export function Login(){
     if (data.success) {
         console.log(data.message);
         console.log(data.user);
+         navigate('/home')
+        
         // navigate("/album"); // optional: redirect after sign-in
     } else {
         setErrors({ form: data.message });
