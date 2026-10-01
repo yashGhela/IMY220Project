@@ -5,6 +5,8 @@ import fs from "fs";
 import path from "path";
 import { upload } from "../middleware/upload.js";
 
+import { uploadPath } from "../utils/paths.js";
+
 const router = Router();
 
 // (adding a user is handled by POST /api/auth/signup)
@@ -87,7 +89,7 @@ router.patch("/:id/profile-pic", upload.single("profile_pic"), async (req, res) 
 
     // delete the old picture file
     if (user.profile_pic) {
-      fs.unlink(path.join("uploads", path.basename(user.profile_pic)), () => {});
+      fs.unlink(uploadPath(post.img_link), () => {});
     }
 
     res.status(200).json({ message: "Profile picture updated", profile_pic });

@@ -3,11 +3,16 @@ import path from "path";
 import fs from "fs";
 import crypto from "crypto";
 
-fs.mkdirSync("uploads", { recursive: true });
+import { UPLOADS_DIR } from "../utils/paths.js";
+
+fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+// inside multer.diskStorage({ ... })
+
 
 export const upload = multer({
   storage: multer.diskStorage({
-    destination: "uploads/",
+    destination: UPLOADS_DIR,
     filename: (req, file, cb) =>
       cb(null, crypto.randomUUID() + path.extname(file.originalname).toLowerCase()),
   }),

@@ -13,6 +13,11 @@ import {BrowserRouter, Routes, Route} from "react-router-dom"
 import { CreatePostPage } from './pages/CreatePostPage.jsx'
 import { CreateAlbumPage } from './pages/CreateAlbumPage.jsx'
 
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/600.css";
+import "@fontsource/jost/400.css";
+import "@fontsource/jost/700.css";
+
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
   <Routes>

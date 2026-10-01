@@ -82,9 +82,10 @@ export function CreatePost() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p>Place image here</p>
+    <form className="items-center my-20 text-center justify-center" onSubmit={handleSubmit}>
+      <p className="my-10 font-bold text-neutral-600">Place image here</p>
       <input
+        class=" w-fit text-sm text-gray-600 border border-gray-300  cursor-pointer  focus:outline-none file:bg-neutral-400 file:text-white file:border-0 file:py-2.5 file:px-4 file:mr-4 file:hover:bg-neutral-800 file:cursor-pointer"
         onChange={(e) => {
           setImgFile(e.target.files[0]);
         }}
@@ -93,8 +94,11 @@ export function CreatePost() {
       />
       {errors.image && <p>{errors.image}</p>}
 
-      <p>Type caption here</p>
+
+
+      <p className="my-10">Type caption here</p>
       <input
+        className="border border-gray-300 p-1"
         value={caption}
         onChange={(e) => {
           setCaption(e.target.value);
@@ -105,7 +109,8 @@ export function CreatePost() {
 
       {errors.form && <p>{errors.form}</p>}
 
-      <button type="submit">Post</button>
+      <br/>
+      <button className=" bg-black p-2 cursor-pointer my-10  text-white w-24" type="submit">Post</button>
     </form>
   );
 }

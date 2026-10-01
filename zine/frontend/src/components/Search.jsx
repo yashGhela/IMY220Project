@@ -42,13 +42,14 @@ export function SearchItem() {
 
   return (
     <div>
-      <form onSubmit={handleSearch}>
+      <form className="m-10" onSubmit={handleSearch}>
         <input
+        className="border border-gray-300 p-1"
           value={searchTerm}
           placeholder="search users"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button type="submit">Search</button>
+        <button className="ml-5 bg-black text-white p-1 cursor-pointer" type="submit">Search</button>
       </form>
 
       {loading && <p>Searching...</p>}

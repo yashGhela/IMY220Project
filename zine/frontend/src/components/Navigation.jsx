@@ -28,10 +28,10 @@ export function Navigation() {
 
   return (
     <nav className="flex mx-5">
-      <Link to="/" className="font-black">ZINE</Link>
+      <Link to="/" className="font-black mt-1 font-display text-2xl text-blue-900">ZINE</Link>
       <ul>
         {authed ? (
-          <div>
+          <div className="mt-2 font-sans">
             <Link className="mx-10" to="/home">Home</Link>
             <Link className="mx-10" to={`/profile/${id}`}>Profile</Link>
             <Link className="mx-10" to="/createpost">Create Post</Link>
@@ -39,7 +39,7 @@ export function Navigation() {
             <button className="mx-10" onClick={handleLogout}>Log out</button>
           </div>
         ) : (
-          <div>
+          <div  className="mt-2 font-sans" >
             <Link className="mx-10" to="/auth">Join</Link>
             <Link className="mx-10" to="/auth">Login</Link>
           </div>

@@ -15,9 +15,9 @@ const PORT = 3001;
 
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static("uploads"));
+import { UPLOADS_DIR } from "./utils/paths.js";
 
-
+app.use("/uploads", express.static(UPLOADS_DIR));
 //SERVER CHECK
 app.get("/api/get", (req, res) => {
   res.status(200).json({

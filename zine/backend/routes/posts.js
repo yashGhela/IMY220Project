@@ -5,6 +5,9 @@ import * as Posts from "../models/posts.js";
 import { upload } from "../middleware/upload.js";
 import { isStr, isValidId } from "../utils/validate.js";
 
+import { uploadPath } from "../utils/paths.js";
+
+
 const router = Router();
 
 router.post("/", upload.single("image"), async (req, res) => {
@@ -102,7 +105,7 @@ router.delete("/:id", async (req, res) => {
     await Posts.deletePost(id);
 
     // delete the image file too
-    fs.unlink(path.join("uploads", path.basename(post.img_link)), () => {});
+    fs.unlink(uploadPath(post.img_link), () => {});
 
     res.status(200).json({ message: "Post deleted" });
   } catch (error) {
@@ -152,7 +155,7 @@ router.patch("/:id", upload.single("image"), async (req, res) => {
 
     
     if (req.file) {
-      fs.unlink(path.join("uploads", path.basename(post.img_link)), () => {});
+      fs.unlink(uploadPath(post.img_link), () => {});
     }
 
     res.status(200).json({
