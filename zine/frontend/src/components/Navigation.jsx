@@ -1,17 +1,17 @@
 import {Link} from "react-router-dom"
 import { getCookie } from "../utils/cookies"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export function Navigation(){
 
-    let authed= false
+    const [authed, setAuthed] = useState(false)
     const isAuthed = ()=>{
         const id= getCookie("userId")
 
         if (!id){
-            authed=false
+            setAuthed(false)
         }else{
-            authed=true
+            setAuthed(true)
         }
     }
 
