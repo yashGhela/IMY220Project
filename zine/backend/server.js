@@ -229,7 +229,7 @@ app.get("api/posts", async(req,res)=>{
 })
 
 
-app.get("api/posts/:user_id", async(req,res)=>{
+app.get("api/posts/u/:user_id", async(req,res)=>{
   try{
     const {id} = req.params
     const posts = await postscol.findMany(id);
@@ -304,6 +304,345 @@ app.patch("api/posts/:id", async(req,res)=>{
 
 
 
+
+app.post("api/comments", async(req,res)=>{
+  try{
+    const{user_id, post_id, comment, timestamp} = req.body
+
+    if (!comment || !comment.trim() || !post_id || !post.trim() || !user_id || !user_id.trim() || !timestamp || !timestamp.trim()) {
+            return res
+                .status(400)
+                .json({ error: "Missing fields." });
+        }
+    
+    const newComment = {
+      user_id:user_id, 
+      post_id:post_id,
+      comment:comment,
+      timestamp:timestamp
+    }
+
+    const result = await commentscol.insertOne(newComment)
+
+    res.status(201).json({
+      _id: result.insertedId,
+      
+    })
+  }catch(error){
+    console.error("Error adding comment:", error);
+    res.status(500).json({ error: "Failed to add comment." });
+  }
+})
+
+
+app.get("api/comments", async(req,res)=>{
+  try{
+    const comments = await commentscol.find().toArray()
+    
+
+    res.status(201).json(comments)
+  }catch(error){
+    console.error("Error getting comments:", error);
+    res.status(500).json({ error: "Failed to get comments." });
+  }
+})
+
+
+
+app.get("api/comments/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const comment = await commentscol.findOne(id);
+    
+
+    res.status(201).json(comment)
+  }catch(error){
+    console.error("Error getting comment:", error);
+    res.status(500).json({ error: "Failed to get comment." });
+  }
+})
+
+app.delete("api/comments/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const result = await commentscol.deleteOne(id);
+    
+
+    res.status(result.acknowledged)
+  }catch(error){
+    console.error("Error deleting comment:", error);
+    res.status(500).json({ error: "Failed to delete comment." });
+  }
+})
+
+
+app.patch("api/comments/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const updates = req.body
+
+    delete updates._id
+    delete updates.createdAt;
+
+    
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No update fields provided" });
+    }
+
+   
+    const result = await commentscol.updateOne(
+      {"_id": new ObjectId(id) },
+      { "$set": updates } 
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "comment not found" });
+    }
+
+    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
+  }catch(error){
+    console.error("Error updating comment:", error);
+    res.status(500).json({ error: "Failed to update comment." });
+  }
+})
+
+
+//Friends
+
+
+
+
+app.post("api/posts", async(req,res)=>{
+  try{
+    const{user_id, caption, img_link, album_id} = req.body
+
+    if (!caption || !caption.trim() || !img_link || !img_link.trim() || !user_id || !user_id.trim()) {
+            return res
+                .status(400)
+                .json({ error: "Missing fields." });
+        }
+    
+    const newPost = {
+      user_id:user_id, 
+      caption:caption,
+      img_link:img_link,
+      album_id:album_id
+    }
+
+    const result = await postscol.insertOne(newPost)
+
+    res.status(201).json({
+      _id: result.insertedId,
+      
+    })
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to add post." });
+  }
+})
+
+
+app.get("api/posts", async(req,res)=>{
+  try{
+    const posts = await postscol.find().toArray()
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to get posts." });
+  }
+})
+
+
+app.get("api/posts/:user_id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const posts = await postscol.findMany(id);
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error getting user posts:", error);
+    res.status(500).json({ error: "Failed to get user posts." });
+  }
+})
+
+app.get("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const post = await postscol.findOne(id);
+    
+
+    res.status(201).json(post)
+  }catch(error){
+    console.error("Error getting post:", error);
+    res.status(500).json({ error: "Failed to get post." });
+  }
+})
+
+app.delete("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const result = await postscol.deleteOne(id);
+    
+
+    res.status(result.acknowledged)
+  }catch(error){
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Failed to delete post." });
+  }
+})
+
+
+app.patch("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const updates = req.body
+
+    delete updates._id
+    delete updates.createdAt;
+
+    
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No update fields provided" });
+    }
+
+   
+    const result = await userscol.updateOne(
+      {"_id": new ObjectId(id) },
+      { "$set": updates } 
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
+  }catch(error){
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Failed to update Post." });
+  }
+})
+
+
+//Albums
+
+
+
+
+app.post("api/posts", async(req,res)=>{
+  try{
+    const{user_id, caption, img_link, album_id} = req.body
+
+    if (!caption || !caption.trim() || !img_link || !img_link.trim() || !user_id || !user_id.trim()) {
+            return res
+                .status(400)
+                .json({ error: "Missing fields." });
+        }
+    
+    const newPost = {
+      user_id:user_id, 
+      caption:caption,
+      img_link:img_link,
+      album_id:album_id
+    }
+
+    const result = await postscol.insertOne(newPost)
+
+    res.status(201).json({
+      _id: result.insertedId,
+      
+    })
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to add post." });
+  }
+})
+
+
+app.get("api/posts", async(req,res)=>{
+  try{
+    const posts = await postscol.find().toArray()
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error adding post:", error);
+    res.status(500).json({ error: "Failed to get posts." });
+  }
+})
+
+
+app.get("api/posts/:user_id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const posts = await postscol.findMany(id);
+    
+
+    res.status(201).json(posts)
+  }catch(error){
+    console.error("Error getting user posts:", error);
+    res.status(500).json({ error: "Failed to get user posts." });
+  }
+})
+
+app.get("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const post = await postscol.findOne(id);
+    
+
+    res.status(201).json(post)
+  }catch(error){
+    console.error("Error getting post:", error);
+    res.status(500).json({ error: "Failed to get post." });
+  }
+})
+
+app.delete("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const result = await postscol.deleteOne(id);
+    
+
+    res.status(result.acknowledged)
+  }catch(error){
+    console.error("Error deleting post:", error);
+    res.status(500).json({ error: "Failed to delete post." });
+  }
+})
+
+
+app.patch("api/posts/:id", async(req,res)=>{
+  try{
+    const {id} = req.params
+    const updates = req.body
+
+    delete updates._id
+    delete updates.createdAt;
+
+    
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "No update fields provided" });
+    }
+
+   
+    const result = await userscol.updateOne(
+      {"_id": new ObjectId(id) },
+      { "$set": updates } 
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "Update successful", modifiedCount: result.modifiedCount });
+  }catch(error){
+    console.error("Error updating post:", error);
+    res.status(500).json({ error: "Failed to update Post." });
+  }
+})
 
 
 
