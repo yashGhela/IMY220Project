@@ -412,90 +412,77 @@ app.patch("api/comments/:id", async(req,res)=>{
 
 
 
-app.post("api/posts", async(req,res)=>{
+app.post("api/friends", async(req,res)=>{
   try{
-    const{user_id, caption, img_link, album_id} = req.body
+    const{user_id, friend_id} = req.body
 
-    if (!caption || !caption.trim() || !img_link || !img_link.trim() || !user_id || !user_id.trim()) {
+    if (!friend_id || !friend_id.trim() || !user_id || !user_id.trim()) {
             return res
                 .status(400)
                 .json({ error: "Missing fields." });
         }
     
-    const newPost = {
+    const newFriend = {
       user_id:user_id, 
-      caption:caption,
-      img_link:img_link,
-      album_id:album_id
+      friend_id:friend_id,
     }
 
-    const result = await postscol.insertOne(newPost)
+    const result = await friendscol.insertOne(newFriend)
 
     res.status(201).json({
       _id: result.insertedId,
       
     })
   }catch(error){
-    console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to add post." });
+    console.error("Error adding friend:", error);
+    res.status(500).json({ error: "Failed to add friend." });
   }
 })
 
 
-app.get("api/posts", async(req,res)=>{
+app.get("api/friends", async(req,res)=>{
   try{
-    const posts = await postscol.find().toArray()
+    const friends = await friendscol.find().toArray()
     
 
-    res.status(201).json(posts)
+    res.status(201).json(friends)
   }catch(error){
-    console.error("Error adding post:", error);
-    res.status(500).json({ error: "Failed to get posts." });
+    console.error("Error getting friends:", error);
+    res.status(500).json({ error: "Failed to get friends." });
   }
 })
 
 
-app.get("api/posts/:user_id", async(req,res)=>{
+app.get("api/friends/:id", async(req,res)=>{
   try{
     const {id} = req.params
-    const posts = await postscol.findMany(id);
+    const friends = await friendscol.findMany(id);
     
 
-    res.status(201).json(posts)
+    res.status(201).json(friends)
   }catch(error){
     console.error("Error getting user posts:", error);
     res.status(500).json({ error: "Failed to get user posts." });
   }
 })
 
-app.get("api/posts/:id", async(req,res)=>{
+
+
+app.delete("api/friends/:id", async(req,res)=>{
   try{
     const {id} = req.params
-    const post = await postscol.findOne(id);
-    
-
-    res.status(201).json(post)
-  }catch(error){
-    console.error("Error getting post:", error);
-    res.status(500).json({ error: "Failed to get post." });
-  }
-})
-
-app.delete("api/posts/:id", async(req,res)=>{
-  try{
-    const {id} = req.params
-    const result = await postscol.deleteOne(id);
+    const result = await friendscol.deleteOne(id);
     
 
     res.status(result.acknowledged)
   }catch(error){
-    console.error("Error deleting post:", error);
-    res.status(500).json({ error: "Failed to delete post." });
+    console.error("Error deleting friend:", error);
+    res.status(500).json({ error: "Failed to delete friend." });
   }
 })
 
 
-app.patch("api/posts/:id", async(req,res)=>{
+app.patch("api/friends/:id", async(req,res)=>{
   try{
     const {id} = req.params
     const updates = req.body
