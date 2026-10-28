@@ -28,7 +28,7 @@ export function Navigation() {
 
   return (
     <nav className="flex mx-5">
-      <Link to="/" className="font-black mt-1 font-display text-2xl text-blue-900">ZINE</Link>
+      <Link to="/" className="font-black mt-1 font-display text-2xl text-blue-700">ZINE</Link>
       <ul>
         {authed ? (
           <div className="mt-2 font-sans">

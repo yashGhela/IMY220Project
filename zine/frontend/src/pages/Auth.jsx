@@ -24,11 +24,11 @@ export function Auth(){
 
     return(
 
-        <div>
+        <div className=" bg-gray-300  h-screen">
 
             <Navigation />
 
-            <button class="m-5" onClick={toggleAuthType}>Change to {isLogin?"Sign Up":"Login"}</button>
+            <button class="m-5 text-sm  text-neutral-700 underline cursor-pointer" onClick={toggleAuthType}>Change to {isLogin?"Sign Up":"Login"}</button>
 
             {isLogin?
             <Login/>

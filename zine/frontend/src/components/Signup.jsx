@@ -123,7 +123,7 @@ export function SignUp() {
 
       {errors.form && <p>{errors.form}</p>}
 
-      <button class=" bg-olive-300 text-white my-10" type="submit">Complete</button>
+      <button class=" bg-black py-2 cursor-pointer hover:bg-blue-700 text-white my-10 w-full" type="submit">Complete</button>
     </form>
   );
 }

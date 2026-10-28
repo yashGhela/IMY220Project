@@ -81,7 +81,7 @@ export function Login(){
 
             {errors.form && <p>{errors.form}</p>} <br/>
 
-            <button class=" bg-olive-300 text-white my-10 w-100"  type="submit">Log in</button>
+            <button class=" bg-black py-2 cursor-pointer hover:bg-blue-700 text-white my-10 w-full"  type="submit">Log in</button>
         </form>
     )
 }
