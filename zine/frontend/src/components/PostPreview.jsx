@@ -11,8 +11,8 @@ export function PostPreview({post}){
     
 
     return(
-        <div onClick={()=>{navigate(`/post/${post._id}`)}} className=" font-sans items-center justify-center border cursor-pointer    m-20 p-20">
-            <img src={API+post.img_link} />
+        <div onClick={()=>{navigate(`/post/${post._id}`)}} className=" font-sans items-center justify-center  w-1/3 cursor-pointer    m-20 p-20">
+            <img src={API+post.img_link || post.img_link || API+"/backend"+post.img_link} />
             <p>{post.username}</p>
             <p>{post.caption}</p>
             <p>{post.commentCount}</p>
