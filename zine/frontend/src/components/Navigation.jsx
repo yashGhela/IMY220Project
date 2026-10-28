@@ -40,8 +40,8 @@ export function Navigation() {
           </div>
         ) : (
           <div  className="mt-2 font-sans" >
-            <Link className="mx-10" to="/auth">Join</Link>
-            <Link className="mx-10" to="/auth">Login</Link>
+            <Link className="mx-10" to="/auth?type=SignUp">Join</Link>
+            <Link className="mx-10" to="/auth?type=Login">Login</Link>
           </div>
         )}
       </ul>

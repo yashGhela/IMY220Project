@@ -28,6 +28,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       caption: caption.trim(),
       img_link: `/uploads/${req.file.filename}`,
       album_id: album_id || null,
+      likes:0,
       createdAt: new Date(),
     };
 

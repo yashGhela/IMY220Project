@@ -4,11 +4,23 @@ import {Navigation} from "../components/Navigation"
 import {Login} from "../components/Login"
 
 import {SignUp} from "../components/Signup"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useParams, useSearchParams } from "react-router-dom"
 
 export function Auth(){
 
-    const [login, setLogin] = useState(false)
+
+   
+    const [searchTypes, setSearchType] = useSearchParams();
+    const type = searchTypes.get("type") || "SignUp"
+
+    const isLogin = type === "Login";
+
+    const toggleAuthType=()=>{
+        setSearchType({type:isLogin? "SignUp": "Login"})
+    }
+
+    
 
     return(
 
@@ -16,9 +28,9 @@ export function Auth(){
 
             <Navigation />
 
-            <button class="m-5" onClick={(e)=>{if(login){setLogin(false)}else{setLogin(true)}}}>Change to {login?"Sign Up":"Login"}</button>
+            <button class="m-5" onClick={toggleAuthType}>Change to {isLogin?"Sign Up":"Login"}</button>
 
-            {login?
+            {isLogin?
             <Login/>
             :
             <SignUp/>
