@@ -4,7 +4,9 @@ export function Album(){
 
     return(
 
-        <Navigation/>
+        <div className="bg-gray-300 min-h-screen  h-full">
+            <Navigation/>
+        </div>
         
     )
 }

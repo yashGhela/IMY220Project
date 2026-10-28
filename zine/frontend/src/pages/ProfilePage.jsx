@@ -5,7 +5,7 @@ export function ProfilePage(){
 
     return(
 
-       <div>
+       <div className="bg-gray-300 min-h-screen  h-full">
          <Navigation />
 
         <Profile />

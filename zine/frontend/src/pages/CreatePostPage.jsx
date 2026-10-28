@@ -5,11 +5,11 @@ export function CreatePostPage(){
 
     return(
 
-        <>
+        <div className="bg-gray-300 min-h-screen  h-full">
         <Navigation/>
 
         <CreatePost/>
-        </>
+        </div>
         
         
     )

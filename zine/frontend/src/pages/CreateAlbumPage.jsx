@@ -10,13 +10,13 @@ export function CreateAlbumPage(){
 
     return(
 
-        <>
+        <div className="bg-gray-300 min-h-screen  h-full">
         <Navigation/>
 
         <CreateAlbum onCreated={() => navigate('/home')} />
 
         
-        </>
+        </div>
         
         
     )
