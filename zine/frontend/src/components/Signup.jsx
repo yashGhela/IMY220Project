@@ -86,6 +86,7 @@ export function SignUp() {
       <input
         type="file"
         accept="image/*"
+        className="my-2 placeholder:underline"
         onChange={(event) => setPfpFile(event.target.files[0])}
       />
 
@@ -93,6 +94,7 @@ export function SignUp() {
         type="text"
         placeholder="Tell us your name..."
         value={name}
+        className="my-2 text-lg placeholder:underline"
         onChange={(event) => setName(event.target.value)}
       />
       {errors.name && <p>{errors.name}</p>}
@@ -101,6 +103,7 @@ export function SignUp() {
         type="email"
         placeholder="Add your email..."
         value={email}
+        className="my-2 text-lg placeholder:underline"
         onChange={(event) => setEmail(event.target.value)}
       />
       {errors.email && <p>{errors.email}</p>}
@@ -109,6 +112,7 @@ export function SignUp() {
         type="password"
         placeholder="And a password..."
         value={password}
+        className="my-2 text-lg placeholder:underline"
         onChange={(event) => setPassword(event.target.value)}
       />
       {errors.password && <p>{errors.password}</p>}
@@ -117,6 +121,7 @@ export function SignUp() {
         type="text"
         placeholder="Finally your username..."
         value={username}
+        className="my-2 text-lg placeholder:underline"
         onChange={(event) => setUsername(event.target.value)}
       />
       {errors.username && <p>{errors.username}</p>}
