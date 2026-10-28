@@ -12,14 +12,14 @@ export function Home(){
 
     return(
 
-        <>
+        <div className="bg-gray-300 h-full">
         <Navigation />
 
         <SearchItem/>
 
         <Feed/>
         
-        </>
+        </div>
         
     )
 }
