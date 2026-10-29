@@ -17,7 +17,7 @@ import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/600.css";
 import "@fontsource/jost/400.css";
 import "@fontsource/jost/700.css";
-import Admin from './pages/Admin.jsx'
+import {Admin} from './pages/Admin.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>

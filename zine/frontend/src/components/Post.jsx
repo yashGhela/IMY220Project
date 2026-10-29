@@ -5,6 +5,7 @@ import { PostComments } from "../components/PostComments";
 import { EditPost } from "../components/EditPost";
 import { getCookie } from "../utils/cookies";
 import { API } from "../config";
+import { ReportPost } from "./ReportPost";
 
 export function Post() {
   const { id } = useParams();
@@ -99,6 +100,7 @@ export function Post() {
           {(d => `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`)(new Date(post.createdAt))}
         </p>
       <p className="mt-5 font-light">{post.caption}</p>
+      {userId && !isOwner && <ReportPost postId={id} />}
 
       {isOwner && (
         <button onClick={() => setEditing(!editing)}>

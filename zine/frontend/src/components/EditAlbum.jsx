@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { getCookie } from "../utils/cookies";
 import { API } from "../config";
 
 export function EditAlbum({ album, albumPosts, onSaved }) {
-  const userId = getCookie("userId");
+  const userId = album.user_id;
 
   const [name, setName] = useState(album.album_name || "");
   const [description, setDescription] = useState(album.description || "");
@@ -101,7 +100,7 @@ export function EditAlbum({ album, albumPosts, onSaved }) {
       <div
         key={post._id}
         onClick={() => toggle(selectedList, setList, post._id)}
-        className={`relative cursor-pointer border-2 ${
+        className={`relative cursor-pointer border-4 ${
           isSelected ? selectedBorder : "border-transparent"
         }`}
       >
@@ -137,7 +136,7 @@ export function EditAlbum({ album, albumPosts, onSaved }) {
       <div className="grid grid-cols-3 gap-4 w-full my-3">
         {albumPosts.length === 0 && <p className="col-span-3">No posts in this album</p>}
         {albumPosts.map((post) =>
-          renderPost(post, toRemove, setToRemove, "border-red-600  p-2", "Will be removed")
+          renderPost(post, toRemove, setToRemove, "border-red-600", "Will be removed")
         )}
       </div>
 
@@ -145,7 +144,7 @@ export function EditAlbum({ album, albumPosts, onSaved }) {
       <div className="grid grid-cols-3 gap-4 w-full my-3">
         {otherPosts.length === 0 && <p className="col-span-3">No other posts to add</p>}
         {otherPosts.map((post) =>
-          renderPost(post, toAdd, setToAdd, "border-blue-600 p-2", "Will be added")
+          renderPost(post, toAdd, setToAdd, "border-blue-600", "Will be added")
         )}
       </div>
 
@@ -160,4 +159,4 @@ export function EditAlbum({ album, albumPosts, onSaved }) {
       </button>
     </form>
   );
-}s
+}

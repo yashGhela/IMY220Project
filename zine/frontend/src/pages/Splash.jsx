@@ -3,8 +3,11 @@ import {Navigation} from "../components/Navigation"
 import batman from "../assets/batman.jpeg"
 import opp from "../assets/oppenheimer.jpeg"
 import int from "../assets/interstellar.jpeg"
+import { useNavigate } from "react-router-dom"
 
 export function Splash(){
+
+   const navigate = useNavigate();
 
     return(
 
@@ -35,7 +38,7 @@ export function Splash(){
         <div className="flex  columns-2 mx-20">
             <h1 className=" text-[250px]  font-[1000] text-black">ZINE</h1>
             <div className="mt-30 ml-32 w-full">
-                <button className="bg-black cursor-pointer p-10 w-full text-white font-bold text-2xl">JOIN</button>
+                <button onClick={()=>{navigate('/auth?type=SignUp')}} className="bg-black cursor-pointer p-10 w-full text-white font-bold text-2xl">JOIN</button>
                 <p className=" text-2xl bottom-0  font-bold">Create. <br/> Challenge. <br/> Innovate.</p>
             </div>
         </div>

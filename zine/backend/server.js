@@ -9,6 +9,7 @@ import postRoutes from "./routes/posts.js";
 import commentRoutes from "./routes/comments.js";
 import friendRoutes from "./routes/friends.js";
 import albumRoutes from "./routes/albums.js";
+import routerRoutes from "./routes/reports.js"
 
 const app = express();
 const PORT = 3001;
@@ -34,6 +35,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/friends", friendRoutes);
 app.use("/api/albums", albumRoutes);
+app.use("/api/reports", routerRoutes)
 
 
 // multer / general error handler, must come after the routes
