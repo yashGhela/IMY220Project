@@ -59,15 +59,19 @@ export function Album() {
       {error && <p className="m-5">{error}</p>}
 
       {album && (
-        <div className="m-5">
-          <p className="text-2xl font-bold">{album.album_name}</p>
+        <div className="m-5 flex flex-col " >
+          <div className="text-left mt-10 ml-10">
+            <p className="text-5xl mt-5 font-bold">{album.album_name}</p>
           <p>{album.description}</p>
+          </div>
 
           {isOwner && (
-            <button className="my-3" onClick={() => setEditing(!editing)}>
+            <button className="my-3  bg-black hover:bg-blue-700 text-white w-fit ml-10 p-2" onClick={() => setEditing(!editing)}>
               {editing ? "Cancel" : "Edit album"}
             </button>
           )}
+
+          <hr />
 
           {editing ? (
             <EditAlbum

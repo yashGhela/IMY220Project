@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { UserPosts } from "../components/UserPosts";
 import { EditProfile } from "../components/EditProfile";
 import { getCookie } from "../utils/cookies";
@@ -16,13 +16,15 @@ export function Profile() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const [albums, setAlbums] = useState([]);
 
   async function load() {
     try {
-      const [userRes, postsRes, friendsRes] = await Promise.all([
+      const [userRes, postsRes, friendsRes, albumsRes] = await Promise.all([
         fetch(`${API}/api/users/${id}`),
         fetch(`${API}/api/posts/u/${id}`),
         fetch(`${API}/api/friends/u/${id}`),
+        fetch(`${API}/api/albums/u/${id}`),
       ]);
 
       if (!userRes.ok) {
@@ -35,6 +37,7 @@ export function Profile() {
       setProfile(await userRes.json());
       if (postsRes.ok) setPosts(await postsRes.json());
       if (friendsRes.ok) setFriends(await friendsRes.json());
+      if (albumsRes.ok) setAlbums(await albumsRes.json());
     } catch {
       setError("Could not connect to the server");
     } finally {
@@ -144,6 +147,16 @@ export function Profile() {
       )}
 
       <hr />
+
+      <div className="flex flex-row gap-4 overflow-x-auto my-5">
+        {albums.length === 0 && <p>No albums yet</p>}
+
+        {albums.map((album) => (
+          <Link className="bg-gray-700 hover:bg-black p-2 text-white" key={album._id} to={`/album/${album._id}`}>
+            {album.album_name}
+          </Link>
+        ))}
+      </div>
 
       <UserPosts posts={posts} />
     </div>
