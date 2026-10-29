@@ -49,7 +49,7 @@ export function Feed(){
 
 
     return (
-        <div>
+        <div className="grid grid-cols-3 w-full">
 
             {loading? <p>Loading...</p>:null}
             {errors.form && <p>{errors.form}</p>}

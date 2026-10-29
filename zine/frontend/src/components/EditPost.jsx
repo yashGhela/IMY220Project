@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookies";
 
 const API = "http://localhost:3001";
@@ -7,6 +7,7 @@ export function EditPost({ post, onUpdated, onDeleted }) {
   const [imgFile, setImgFile] = useState(null);
   const [caption, setCaption] = useState(post.caption);
   const [errors, setErrors] = useState({});
+  const [preview, setPreview] = useState("");
 
 
   if (getCookie("userId") !== post.user_id) return null;
@@ -76,14 +77,35 @@ export function EditPost({ post, onUpdated, onDeleted }) {
     }
   }
 
+   useEffect(() => {
+        if (!imgFile) {
+          setPreview("");
+          return;
+        }
+      
+        const url = URL.createObjectURL(imgFile);
+        setPreview(url);
+      
+        return () => URL.revokeObjectURL(url); // free memory when the file changes
+      }, [imgFile]);
+
   return (
     <form onSubmit={handleSave}>
       <p>Change picture</p>
-      <img
-        src={imgFile ? URL.createObjectURL(imgFile) : API + post.img_link}
-        alt="Post preview"
-        width="200"
+      <label className=" flex h-64  w-64 my-5 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-gray-400 bg-gray-200">
+      {preview ? (
+        <img src={preview} alt="Preview" className="h-full w-full object-cover" />
+      ) : (
+        <span className="text-gray-600">Add a file</span>
+      )}
+
+      <input
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => setImgFile(e.target.files[0] || null)}
       />
+    </label>
       <input
         type="file"
         accept="image/*"
@@ -94,6 +116,7 @@ export function EditPost({ post, onUpdated, onDeleted }) {
       <p>Change caption</p>
       <input
         type="text"
+        className=" w-100 no-underline  text-lg  border border-gray-400  bg-gray-300  p-2 my-2"
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
       />
@@ -101,8 +124,10 @@ export function EditPost({ post, onUpdated, onDeleted }) {
 
       {errors.form && <p>{errors.form}</p>}
 
-      <button type="submit">Save</button>
-      <button type="button" onClick={handleDelete}>Delete post</button>
+       <br/>
+      <button className="bg-black hover:bg-blue-700 p-2 mt-5 text-white" type="submit">Save</button>
+      <br/>
+      <button className="bg-red-500 hover:bg-red-700 p-2 my-5 text-white" type="button" onClick={handleDelete}>Delete post</button>
     </form>
   );
 }

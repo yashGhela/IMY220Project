@@ -86,7 +86,7 @@ export function Profile() {
     if (!viewerId) return null;
 
     if (!relation) {
-      return <button onClick={sendRequest}>Add friend</button>;
+      return <button className=" bg-gray-900 text-white p-2 my-2 cursor-pointer" onClick={sendRequest}>Add friend</button>;
     }
 
     if (relation.status === "accepted") {

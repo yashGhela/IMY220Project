@@ -43,12 +43,15 @@ export function PostPreview({ post }) {
   return (
     <div
       onClick={() => navigate(`/post/${post._id}`)}
-      className="font-sans items-center justify-center w-1/3 cursor-pointer  p-10"
+      className="font-sans items-center justify-center w-full cursor-pointer  p-10"
     >
 
         <p className=" font-black">@{username}</p>
       <img className="mt-2" src={API + post.img_link} />
       
+      <p className="text-sm italic">
+          {(d => `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`)(new Date(post.createdAt))}
+        </p>
       <p className="mt-2">{post.caption}</p>
       <p className="text-gray-400 mt-2">{commentCount}</p>
     </div>

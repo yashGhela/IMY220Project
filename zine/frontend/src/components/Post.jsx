@@ -95,6 +95,9 @@ export function Post() {
 
       </div>
       <PostImage img={API + post.img_link} />
+      <p className="text-sm italic">
+          {(d => `${d.getMonth() + 1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2, "0")}`)(new Date(post.createdAt))}
+        </p>
       <p className="mt-5 font-light">{post.caption}</p>
 
       {isOwner && (

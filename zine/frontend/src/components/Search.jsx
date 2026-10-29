@@ -44,29 +44,32 @@ export function SearchItem() {
     <div>
       <form className="m-10" onSubmit={handleSearch}>
         <input
-        className="border border-gray-300 p-1"
+         className=" w-100 no-underline  text-lg  border border-gray-400  bg-gray-300  p-2 my-2"
           value={searchTerm}
           placeholder="search users"
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <button className="ml-5 bg-black text-white p-1 cursor-pointer" type="submit">Search</button>
+        <button className="ml-5 bg-black text-white p-3 cursor-pointer" type="submit">Search</button>
       </form>
 
       {loading && <p>Searching...</p>}
       {error && <p>{error}</p>}
       {searched && !loading && results.length === 0 && <p>No users found</p>}
 
-      {results.map((user) => (
-        <Link key={user._id} to={`/profile/${user._id}`}>
+      <div className="ml-20">
+        {results.map((user) => (
+        <Link  key={user._id} to={`/profile/${user._id}`}>
           <img
             src={user.profile_pic ? API + user.profile_pic : "/default-avatar.png"}
             alt={user.username}
             width="40"
           />
+           <p className="text-sm font-bold">@{user.username}</p>
           <p>{user.name}</p>
-          <p>@{user.username}</p>
+         
         </Link>
       ))}
+      </div>
     </div>
   );
 }

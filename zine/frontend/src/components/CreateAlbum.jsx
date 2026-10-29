@@ -81,26 +81,28 @@ export function CreateAlbum({ onCreated }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="items-center  rounded-2xl border  w-96  border-gray-600 p-5  m-20 text-center justify-center" onSubmit={handleSubmit}>
       <p>Album name</p>
       <input
         type="text"
+        className=" w-80 no-underline  text-lg  border border-gray-400  bg-gray-300  p-2 my-2"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       {errors.name && <p>{errors.name}</p>}
 
       <p>Description</p>
-      <input
+      <textarea
         type="text"
         value={description}
+        className="  w-80 no-underline resize-y  text-lg  border border-gray-400  bg-gray-300  p-2 my-2"
         onChange={(e) => setDescription(e.target.value)}
       />
       {errors.description && <p>{errors.description}</p>}
 
-      {errors.form && <p>{errors.form}</p>}
+      {errors.form && <p>{errors.form}</p>} <br/>
 
-      <button type="submit">Create album</button>
+      <button className="bg-black text-white hover:bg-blue-700 w-full p-3 my-10" type="submit">Create album</button>
     </form>
   );
 }
