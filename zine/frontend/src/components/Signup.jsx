@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCookie } from "../utils/cookies";
 
@@ -8,6 +8,7 @@ export function SignUp() {
   const [name, setName] = useState("");
   const [pfpFile, setPfpFile] = useState(null);
   const [email, setEmail] = useState("");
+  const [preview, setPreview] = useState("")
   const [errors, setErrors] = useState({});
 
   const navigate = useNavigate();
@@ -81,14 +82,36 @@ export function SignUp() {
     }
   }
 
+    useEffect(() => {
+    if (!pfpFile) {
+      setPreview("");
+      return;
+    }
+  
+    const url = URL.createObjectURL(pfpFile);
+    setPreview(url);
+  
+    return () => URL.revokeObjectURL(url); // free memory when the file changes
+  }, [pfpFile]);
+
   return (
-    <form class="flex flex-col m-40" onSubmit={handleSubmit}>
+    <form class="flex flex-col m-20" onSubmit={handleSubmit}>
+              
+      <label className=" flex h-64  w-64 my-5 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-gray-400 bg-gray-200">
+      {preview ? (
+        <img src={preview} alt="Preview" className="h-full w-full object-cover" />
+      ) : (
+        <span className="text-gray-600">Add a file</span>
+      )}
+
       <input
         type="file"
         accept="image/*"
-        className="my-2 placeholder:underline"
-        onChange={(event) => setPfpFile(event.target.files[0])}
+        className="hidden"
+        onChange={(e) => setPfpFile(e.target.files[0] || null)}
       />
+    </label>
+    {errors.image && <p>{errors.image}</p>}
 
       <input
         type="text"

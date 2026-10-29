@@ -24,7 +24,7 @@ export function Auth(){
 
     return(
 
-        <div className=" bg-gray-300  h-screen">
+        <div className=" bg-gray-300 h-full  min-h-screen">
 
             <Navigation />
 

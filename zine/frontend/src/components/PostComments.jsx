@@ -29,10 +29,10 @@ export function PostComments({ comments, users, currentUserId, onAdd, onDelete }
 
   return (
     <div>
-      <p>Comments ({comments.length})</p>
+      <p className=" font-bold mt-5">Comments ({comments.length})</p>
 
       {comments.map((c) => (
-        <div key={c._id}>
+        <div className="my-10" key={c._id}>
           <p>
             {users[c.user_id] ? users[c.user_id].username : "Unknown user"}
             {" · "}
@@ -45,7 +45,7 @@ export function PostComments({ comments, users, currentUserId, onAdd, onDelete }
         </div>
       ))}
 
-      <form onSubmit={handleSubmit}>
+      <form className="my-10" onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Add a comment..."

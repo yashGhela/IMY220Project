@@ -88,11 +88,14 @@ export function Post() {
   const isOwner = userId === post.user_id;
 
   return (
-    <div>
-      <p>{creator ? creator.username : "Unknown user"}</p>
+    <div className="mt-10 mx-40">
+      <div className="flex my-5">
+        <img className=" h-10 w-10 " src={API+creator.profile_pic} alt="" />
+      <p className=" py-2 ml-5 font-black text-lg">@{creator ? creator.username : "Unknown user"}</p>
 
-      <PostImage img={post.img_link} />
-      <p>{post.caption}</p>
+      </div>
+      <PostImage img={API + post.img_link} />
+      <p className="mt-5 font-light">{post.caption}</p>
 
       {isOwner && (
         <button onClick={() => setEditing(!editing)}>
@@ -111,6 +114,7 @@ export function Post() {
         />
       )}
 
+      <hr />
       <PostComments
         comments={comments}
         users={users}

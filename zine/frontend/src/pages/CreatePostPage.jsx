@@ -5,10 +5,12 @@ export function CreatePostPage(){
 
     return(
 
-        <div className="bg-gray-300 min-h-screen  h-full">
+        <div className="bg-gray-300 min-h-screen   h-full">
         <Navigation/>
 
-        <CreatePost/>
+        <div className="items-center justify-center flex">
+            <CreatePost />
+        </div>
         </div>
         
         

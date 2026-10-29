@@ -3,6 +3,6 @@
 export function PostImage({img}){
 
     return(
-        <img src={img} />
+        <img className="w-full h-full" src={img} />
     )
 }

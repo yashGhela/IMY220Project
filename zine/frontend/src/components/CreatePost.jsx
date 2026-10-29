@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getCookie } from "../utils/cookies";
 import { useNavigate } from "react-router-dom";
 
@@ -6,7 +6,7 @@ export function CreatePost() {
   const [imgfile, setImgFile] = useState(null);
   const [caption, setCaption] = useState("");
   const [errors, setErrors] = useState({});
-
+  const [preview, setPreview] = useState("");
   const navigate = useNavigate()
 
   function validateImage(file) {
@@ -81,25 +81,46 @@ export function CreatePost() {
     }
   }
 
+  useEffect(() => {
+  if (!imgfile) {
+    setPreview("");
+    return;
+  }
+
+  const url = URL.createObjectURL(imgfile);
+  setPreview(url);
+
+  return () => URL.revokeObjectURL(url); // free memory when the file changes
+}, [imgfile]);
+
   return (
-    <form className="items-center my-20 text-center justify-center" onSubmit={handleSubmit}>
+    <form className="items-center  rounded-2xl border w-96  border-gray-600 p-5  m-20 text-center justify-center" onSubmit={handleSubmit}>
       
-      <input
-        
-        onChange={(e) => {
-          setImgFile(e.target.files[0]);
-        }}
-        type="file"
-        accept="image/*"
-      />
-      {errors.image && <p>{errors.image}</p>}
+   <label className=" flex h-64  cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-gray-400 bg-gray-200">
+  {preview ? (
+    <img src={preview} alt="Preview" className="h-full w-full object-cover" />
+  ) : (
+    <span className="text-gray-600">Add a file</span>
+  )}
+
+  <input
+    type="file"
+    accept="image/*"
+    className="hidden"
+    onChange={(e) => setImgFile(e.target.files[0] || null)}
+  />
+</label>
+{errors.image && <p>{errors.image}</p>}
+      
 
 
+ <br/>
 
-      <p className="my-10">Type caption here</p>
-      <input
-        className="border border-gray-300 p-1"
+     
+      <textarea
+        className="border border-gray-400   p-5  w-full bg-gray-200  resize-y rounded-2xl"
         value={caption}
+        placeholder="Type Caption Here"
         onChange={(e) => {
           setCaption(e.target.value);
         }}
@@ -110,7 +131,7 @@ export function CreatePost() {
       {errors.form && <p>{errors.form}</p>}
 
       <br/>
-      <button className=" bg-black p-2 cursor-pointer my-10  text-white w-24" type="submit">Post</button>
+      <button className=" bg-black p-2 w-full cursor-pointer my-10 hover:bg-blue-700  text-white " type="submit">Post</button>
     </form>
   );
 }
