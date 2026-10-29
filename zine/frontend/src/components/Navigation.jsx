@@ -36,7 +36,7 @@ export function Navigation() {
             <Link className="mx-10" to={`/profile/${id}`}>Profile</Link>
             <Link className="mx-10" to="/createpost">Create Post</Link>
             <Link className="mx-10" to="/createalbum">Create Album</Link>
-            <button className="mx-10" onClick={handleLogout}>Log out</button>
+            <button className="mx-10 cursor-pointer " onClick={handleLogout}>Log out</button>
           </div>
         ) : (
           <div  className="mt-2 font-sans" >
