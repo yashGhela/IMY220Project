@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as Users from "../models/users.js";
-import { isValidId, pick } from "../utils/validate.js";
+import { isValidId, pick, isStr } from "../utils/validate.js";
 import fs from "fs";
 import path from "path";
 import { upload } from "../middleware/upload.js";
@@ -21,6 +21,24 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Failed to get users." });
   }
 });
+
+router.get("/search", async (req, res) => {
+  try {
+    const { q } = req.query;
+
+    if (!isStr(q)) {
+      return res.status(400).json({ error: "Search term is required." });
+    }
+
+    const users = await Users.searchUsers(q.trim());
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error searching users:", error);
+    res.status(500).json({ error: "Failed to search users." });
+  }
+});
+
 
 router.get("/:id", async (req, res) => {
   try {
@@ -64,6 +82,36 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+router.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!isValidId(id)) {
+      return res.status(400).json({ error: "Invalid user id." });
+    }
+
+    const updates = pick(req.body, ["name", "email", "bio"]);
+
+    if (Object.keys(updates).length === 0) {
+      return res.status(400).json({ error: "Nothing to update." });
+    }
+
+    const user = await Users.getUserById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found." });
+    }
+
+    await Users.updateUser(id, updates);
+
+    res.status(200).json({ message: "User updated" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Failed to update user." });
+  }
+});
+
 router.patch("/:id/profile-pic", upload.single("profile_pic"), async (req, res) => {
   try {
     const { id } = req.params;
@@ -89,7 +137,7 @@ router.patch("/:id/profile-pic", upload.single("profile_pic"), async (req, res) 
 
     // delete the old picture file
     if (user.profile_pic) {
-      fs.unlink(uploadPath(post.img_link), () => {});
+      fs.unlink(uploadPath(user.profile_pic), () => {});
     }
 
     res.status(200).json({ message: "Profile picture updated", profile_pic });
@@ -101,22 +149,6 @@ router.patch("/:id/profile-pic", upload.single("profile_pic"), async (req, res) 
 });
 
 
-router.get("/search", async (req, res) => {
-  try {
-    const { q } = req.query;
-
-    if (!isStr(q)) {
-      return res.status(400).json({ error: "Search term is required." });
-    }
-
-    const users = await Users.searchUsers(q.trim());
-
-    res.status(200).json(users);
-  } catch (error) {
-    console.error("Error searching users:", error);
-    res.status(500).json({ error: "Failed to search users." });
-  }
-});
 
 
 export default router;

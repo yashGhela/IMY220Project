@@ -118,7 +118,7 @@ export function CreatePost() {
 
      
       <textarea
-        className="border border-gray-400   p-5  w-full bg-gray-200  resize-y rounded-2xl"
+        className="border border-gray-400   p-5  w-full bg-gray-300  resize-y "
         value={caption}
         placeholder="Type Caption Here"
         onChange={(e) => {

@@ -70,12 +70,12 @@ export function Login(){
     return(
         <form class="m-40" onSubmit={handleSubmit}>
             
-            <input className="w-100 no-underline text-lg  placeholder:underline  p-2 my-2" placeholder="type in your username" value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" />
+            <input className=" w-100 no-underline  text-lg  border border-gray-400  bg-gray-300  p-2 my-2"  placeholder="type in your username" value={username} onChange={(e)=>{setUsername(e.target.value)}} type="text" />
             {errors.username && <p>{errors.username}</p>}
             <br/>
 
           
-            <input className="w-100 no-underline  text-lg placeholder:underline  p-2 my-2" placeholder="and your secret password" value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" />
+            <input  className=" w-100 no-underline  text-lg  border border-gray-400  bg-gray-300  p-2 my-2" placeholder=" your secret password" value={password} onChange={(e)=>{setPassword(e.target.value)}} type="password" />
 
             {errors.password && <p>{errors.password}</p>}
 

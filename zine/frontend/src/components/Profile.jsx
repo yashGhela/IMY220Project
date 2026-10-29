@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { UserPosts } from "../components/UserPosts";
+import { EditProfile } from "../components/EditProfile";
 import { getCookie } from "../utils/cookies";
 import { API } from "../config";
 
@@ -11,17 +12,10 @@ export function Profile() {
 
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [friends, setFriends] = useState([]); 
+  const [friends, setFriends] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-
-
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [bio, setBio] = useState("");
-  const [pfpFile, setPfpFile] = useState(null);
-  const [formError, setFormError] = useState("");
 
   async function load() {
     try {
@@ -112,59 +106,6 @@ export function Profile() {
     );
   }
 
-  // ---------- editing ----------
-  function startEditing() {
-    setName(profile.name || "");
-    setEmail(profile.email || "");
-    setBio(profile.bio || "");
-    setPfpFile(null);
-    setFormError("");
-    setEditing(true);
-  }
-
-  async function handleSave(event) {
-    event.preventDefault();
-
-    if (!name.trim()) return setFormError("Name is required");
-    if (!email.trim() || !email.includes("@")) return setFormError("Enter a valid email address");
-    if (pfpFile && !pfpFile.type.startsWith("image/")) return setFormError("Only image files are allowed");
-    if (pfpFile && pfpFile.size > 5 * 1024 * 1024) return setFormError("Image must be 5MB or smaller");
-
-    try {
-      const response = await fetch(`${API}/api/users/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        // bio can be cleared, so send it even when empty
-        body: JSON.stringify({ name, email, bio: bio.trim() ? bio : " " }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        return setFormError(data.error || "Failed to update profile");
-      }
-
-      if (pfpFile) {
-        const formData = new FormData();
-        formData.append("profile_pic", pfpFile); // must match upload.single("profile_pic")
-
-        const picRes = await fetch(`${API}/api/users/${id}/profile-pic`, {
-          method: "PATCH",
-          body: formData,
-        });
-
-        if (!picRes.ok) {
-          const data = await picRes.json();
-          return setFormError(data.error || "Failed to update profile picture");
-        }
-      }
-
-      setEditing(false);
-      load();
-    } catch {
-      setFormError("Could not connect to the server");
-    }
-  }
-
   // ---------- render ----------
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -184,7 +125,7 @@ export function Profile() {
       <p>{profile.bio}</p>
 
       {isOwnProfile ? (
-        <button onClick={editing ? () => setEditing(false) : startEditing}>
+        <button onClick={() => setEditing(!editing)}>
           {editing ? "Cancel" : "Edit profile"}
         </button>
       ) : (
@@ -192,27 +133,14 @@ export function Profile() {
       )}
 
       {editing && (
-        <form onSubmit={handleSave}>
-          <p>Change picture</p>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setPfpFile(e.target.files[0] || null)}
-          />
-
-          <p>Name</p>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-
-          <p>Email</p>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
-          <p>Bio</p>
-          <input type="text" value={bio} onChange={(e) => setBio(e.target.value)} />
-
-          {formError && <p>{formError}</p>}
-
-          <button type="submit">Save</button>
-        </form>
+        <EditProfile
+          profile={profile}
+          userId={id}
+          onSaved={() => {
+            setEditing(false);
+            load();
+          }}
+        />
       )}
 
       <hr />
