@@ -92,7 +92,7 @@ export function Post() {
     <div className="mt-10 mx-40">
       <div onClick={()=>{navigate(`/Profile/${creator._id}`)}} className=" cursor-pointer flex my-5">
         <img className=" h-10 w-10 " src={API+creator.profile_pic} alt="" />
-      <p className=" py-2 ml-5 font-black text-lg">@{creator ? creator.username : "Unknown user"}</p>
+      <p className=" font-heading py-2 ml-5 font-black text-lg">@{creator ? creator.username : "Unknown user"}</p>
 
       </div>
       <PostImage img={API + post.img_link} />

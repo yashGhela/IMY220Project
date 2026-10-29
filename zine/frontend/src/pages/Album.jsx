@@ -61,7 +61,7 @@ export function Album() {
       {album && (
         <div className="m-5 flex flex-col " >
           <div className="text-left mt-10 ml-10">
-            <p className="text-5xl mt-5 font-bold">{album.album_name}</p>
+            <p className="text-5xl mt-5 font-heading font-bold">{album.album_name}</p>
           <p>{album.description}</p>
           </div>
 

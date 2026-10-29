@@ -142,7 +142,7 @@ export function Profile() {
             {albums.length === 0 && <p>No albums yet</p>}
 
             {albums.map((album) => (
-              <Link key={album._id} to={`/album/${album._id}`} className="shrink-0">
+              <Link key={album._id} to={`/album/${album._id}`} className="shrink-0 bg-black p-2 text-white">
                 {album.album_name}
               </Link>
             ))}

@@ -1,6 +1,8 @@
+
+@import url("https://use.typekit.net/fot7exv.css");
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Montserrat", sans-serif;
-  --font-display: "Jost", sans-serif;
+@theme{
+    --default-font-family: "futura-pt", sans-serif;
+    --font-heading: "sinter", sans-serif;
 }

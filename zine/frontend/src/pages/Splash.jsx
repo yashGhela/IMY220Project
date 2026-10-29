@@ -36,7 +36,7 @@ export function Splash(){
 
 </div>
         <div className="flex  columns-2 mx-20">
-            <h1 className=" text-[250px]  font-[1000] text-black">ZINE</h1>
+            <h1 className=" font-heading text-[250px]  font-[1000] text-black">ZINE</h1>
             <div className="mt-30 ml-32 w-full">
                 <button onClick={()=>{navigate('/auth?type=SignUp')}} className="bg-black cursor-pointer p-10 w-full text-white font-bold text-2xl">JOIN</button>
                 <p className=" text-2xl bottom-0  font-bold">Create. <br/> Challenge. <br/> Innovate.</p>

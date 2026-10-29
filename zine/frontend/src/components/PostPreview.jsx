@@ -46,7 +46,7 @@ export function PostPreview({ post }) {
       className="font-sans items-center justify-center w-full cursor-pointer  p-10"
     >
 
-        <p className=" font-black">@{username}</p>
+        <p className=" font-heading font-black">@{username}</p>
       <img className="mt-2" src={API + post.img_link} />
       
       <p className="text-sm italic">

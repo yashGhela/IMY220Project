@@ -10,11 +10,11 @@ export function ProfileHeader({ profile, full, friendCount, children }) {
         width="120"
       />
 
-      <p className="font-bold">{profile.name}</p>
+      <p className="font-black text-3xl font-heading">{profile.name}</p>
 
       {full && (
         <>
-          <p>@{profile.username}</p>
+          <p className=" font-bold text-lg">@{profile.username}</p>
           <p>{friendCount} {friendCount === 1 ? "friend" : "friends"}</p>
           <p>{profile.bio}</p>
         </>
