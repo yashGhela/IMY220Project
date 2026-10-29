@@ -24,6 +24,7 @@ export const collections = {
   get comments() { return getDB().collection("Comments"); },
   get albums()   { return getDB().collection("Albums"); },
   get friends()  { return getDB().collection("Friends"); },
+  get reports() {return getDB().collection("Reports")}
 };
 
 function getDB() {
