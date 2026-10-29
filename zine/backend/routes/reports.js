@@ -47,6 +47,18 @@ router.post("/", async (req, res) => {
   }
 });
 
+// { post_id: count }, used by the feed to hide heavily reported posts
+router.get("/counts", async (req, res) => {
+  try {
+    const rows = await Reports.getReportCounts();
+
+    res.status(200).json(Object.fromEntries(rows.map((r) => [r._id, r.count])));
+  } catch (error) {
+    console.error("Error getting report counts:", error);
+    res.status(500).json({ error: "Failed to get report counts." });
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     const reports = await Reports.getAllReports();

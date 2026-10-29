@@ -4,11 +4,15 @@ import { getCookie } from "../utils/cookies";
 
 const API = "http://localhost:3001";
 
+// posts reported more than this many times are hidden from the feed
+const REPORT_LIMIT = 2;
+
 export function Feed() {
   const viewerId = getCookie("userId");
 
   const [posts, setPosts] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [reportCounts, setReportCounts] = useState({}); // { post_id: count }
   const [mode, setMode] = useState("global"); // "global" | "local"
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(true);
@@ -18,9 +22,10 @@ export function Feed() {
       setLoading(true);
 
       // friends are only fetched when someone is signed in
-      const [postsRes, friendsRes] = await Promise.all([
+      const [postsRes, friendsRes, countsRes] = await Promise.all([
         fetch(`${API}/api/posts`),
         viewerId ? fetch(`${API}/api/friends/u/${viewerId}`) : null,
+        fetch(`${API}/api/reports/counts`),
       ]);
 
       if (!postsRes.ok) {
@@ -34,6 +39,10 @@ export function Feed() {
 
       if (friendsRes && friendsRes.ok) {
         setFriends(await friendsRes.json());
+      }
+
+      if (countsRes.ok) {
+        setReportCounts(await countsRes.json());
       }
     } catch {
       setErrors({ form: "Could not connect to the server" });
@@ -53,8 +62,11 @@ export function Feed() {
       .map((f) => (f.user_id === viewerId ? f.friend_id : f.user_id))
   );
 
+  // hide posts that have been reported too many times
+  const notHidden = posts.filter((p) => (reportCounts[p._id] || 0) <= REPORT_LIMIT);
+
   const visiblePosts =
-    mode === "local" ? posts.filter((p) => friendIds.has(p.user_id)) : posts;
+    mode === "local" ? notHidden.filter((p) => friendIds.has(p.user_id)) : notHidden;
 
   function tabClass(tab) {
     return `px-4 py-2 cursor-pointer ${

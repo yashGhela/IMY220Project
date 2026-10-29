@@ -21,3 +21,9 @@ export const deleteReportsByPost = (post_id) =>
 
 export const getReportByUserAndPost = (user_id, post_id) =>
   collections.reports.findOne({ user_id, post_id });
+
+
+export const getReportCounts = () =>
+  collections.reports
+    .aggregate([{ $group: { _id: "$post_id", count: { $sum: 1 } } }])
+    .toArray();
